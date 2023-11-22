@@ -35,7 +35,7 @@ document.ready(
     () => {
         var _Blog = window._Blog || {};
         const currentTheme = window.localStorage && window.localStorage.getItem('theme');
-        const isDark = currentTheme === 'dark';
+        const isDark = currentTheme !== 'dark';
         const pagebody = document.getElementsByTagName('body')[0]
         if (isDark) {
             document.getElementById("switch_default").checked = true;
