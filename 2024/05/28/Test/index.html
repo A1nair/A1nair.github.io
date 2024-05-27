@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Alnair">
+
+
+
+
+
+<title>Test | Alnair&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="Alnair's Blog" type="application/atom+xml">
+</head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Alnair&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Alnair&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Test</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Alnair</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 28, 2024&nbsp;&nbsp;0:02:48</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>本文用以测试此网站是否正常工作</p>
+<h1 id="中文测试"><a href="#中文测试" class="headerlink" title="中文测试"></a>中文测试</h1><p><strong>一代人</strong></p>
+<p><em>顾城</em></p>
+<p>黑夜给了我黑色的眼睛，</p>
+<p>我却用它寻找光明。</p>
+<h1 id="Markdown-Test"><a href="#Markdown-Test" class="headerlink" title="Markdown Test"></a>Markdown Test</h1><h1 id="Heading-1"><a href="#Heading-1" class="headerlink" title="Heading 1"></a>Heading 1</h1><h2 id="Heading-2"><a href="#Heading-2" class="headerlink" title="Heading 2"></a>Heading 2</h2><h3 id="Heading-3"><a href="#Heading-3" class="headerlink" title="Heading 3"></a>Heading 3</h3><h4 id="Heading-4"><a href="#Heading-4" class="headerlink" title="Heading 4"></a>Heading 4</h4><h5 id="Heading-5"><a href="#Heading-5" class="headerlink" title="Heading 5"></a>Heading 5</h5><hr>
+<ul>
+<li><p><strong>Bold</strong></p>
+</li>
+<li><p><em>Italic</em></p>
+</li>
+<li><p><em><strong>Bold and Italic</strong></em></p>
+</li>
+</ul>
+<blockquote>
+<p>Normal blockquote</p>
+</blockquote>
+<blockquote><p>Quote from a book</p>
+<footer><strong>Author</strong><cite>Book Title</cite></footer></blockquote>
+
+<blockquote><p>NEW: DevDocs now comes with syntax highlighting. <a target="_blank" rel="noopener" href="http://devdocs.io/">http://devdocs.io</a></p>
+<footer><strong>@DevDocs</strong><cite><a target="_blank" rel="noopener" href="https://twitter.com/devdocs/status/356095192085962752">twitter.com/devdocs/status/356095192085962752</a></cite></footer></blockquote>
+
+<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
+<footer><strong>Seth Godin</strong><cite><a target="_blank" rel="noopener" href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
+
+<h1 id="MathJax-Test"><a href="#MathJax-Test" class="headerlink" title="MathJax Test"></a>MathJax Test</h1><h2 id="行内公式与块公式"><a href="#行内公式与块公式" class="headerlink" title="行内公式与块公式"></a>行内公式与块公式</h2><figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span>f(x)=ax+b<span class="built_in">$</span> 这是行内公式.</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span>f(x)=ax+b<span class="built_in">$</span><span class="built_in">$</span> 这是块公式，单独占一行.</span><br></pre></td></tr></table></figure>
+
+<p>$f(x)&#x3D;ax+b$ 这是行内公式.<br>$$f(x)&#x3D;ax+b$$ 这是块公式，单独占一行.</p>
+<h2 id="上标与下标"><a href="#上标与下标" class="headerlink" title="上标与下标"></a>上标与下标</h2><p>使用 ^ 表示上标，使用 _ 表示下标，如果上下标的内容多于一个字符，可以使用大括号括起来：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span>f(x) = a<span class="built_in">_</span>1x<span class="built_in">^</span>n + a<span class="built_in">_</span>2x<span class="built_in">^</span>&#123;n-1&#125; + a<span class="built_in">_</span>3x<span class="built_in">^</span>&#123;n-2&#125;<span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$f(x) &#x3D; a_1x^n + a_2x^{n-1} + a_3x^{n-2}$$</p>
+<p>如果左右两边都有上下标可以使用 \sideset 语法：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span><span class="keyword">\sideset</span>&#123;<span class="built_in">^</span>n<span class="built_in">_</span>k&#125;&#123;<span class="built_in">^</span>x<span class="built_in">_</span>y&#125;a<span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$\sideset{^n_k}{^x_y}a$$</p>
+<h2 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h2><p>在 markdown 语法中，, $, {, }, _都是有特殊含义的，所以需要加\转义。小括号与方括号可以使用原始的() [] 大括号需要转义\也可以使用\lbrace和 \rbrace</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span> <span class="keyword">\\</span>&#123;x*y<span class="keyword">\\</span>&#125; <span class="built_in">$</span><span class="built_in">$</span>  --注：大括号在markdown中已有一次转义，在mathjax中还要再转一次，所以为两个斜杠</span><br><span class="line"></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span><span class="keyword">\lbrace</span> x*y <span class="keyword">\rbrace</span><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$ \{x*y\} $$</p>
+<p>$$\lbrace x*y \rbrace$$</p>
+<p>原始符号不会随着公式大小自动缩放，需要使用 \left 和 \right 来实现自动缩放：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span><span class="keyword">\left</span> <span class="keyword">\lbrace</span> <span class="keyword">\sum</span><span class="built_in">_</span>&#123;i=0&#125;<span class="built_in">^</span>n i<span class="built_in">^</span>3 = <span class="keyword">\frac</span>&#123;(n<span class="built_in">^</span>2+n)(n+6)&#125;&#123;9&#125; <span class="keyword">\right</span> <span class="keyword">\rbrace</span><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$\left \lbrace \sum_{i&#x3D;0}^n i^3 &#x3D; \frac{(n^2+n)(n+6)}{9} \right \rbrace$$</p>
+<p>不使用\left 和 \right的效果：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span> <span class="keyword">\lbrace</span> <span class="keyword">\sum</span><span class="built_in">_</span>&#123;i=0&#125;<span class="built_in">^</span>n i<span class="built_in">^</span>3 = <span class="keyword">\frac</span>&#123;(n<span class="built_in">^</span>2+n)(n+6)&#125;&#123;9&#125;  <span class="keyword">\rbrace</span><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$ \lbrace \sum_{i&#x3D;0}^n i^3 &#x3D; \frac{(n^2+n)(n+6)}{9}  \rbrace$$</p>
+<h2 id="分数与开方"><a href="#分数与开方" class="headerlink" title="分数与开方"></a>分数与开方</h2><p>可以使用\frac 或者 \over 实现分数的显示：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\frac</span> xy<span class="built_in">$</span></span><br><span class="line"><span class="built_in">$</span> x+3 <span class="keyword">\over</span> y+5 <span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示为 $\frac xy$ 和 $ x+3 \over y+5 $</p>
+<p>开方使用\sqrt:</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span> <span class="keyword">\sqrt</span>&#123;x<span class="built_in">^</span>5&#125; <span class="built_in">$</span></span><br><span class="line"><span class="built_in">$</span> <span class="keyword">\sqrt</span>[3]&#123;<span class="keyword">\frac</span> xy&#125; <span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示为 $ \sqrt{x^5} $ 和 $ \sqrt[3]{\frac xy} $</p>
+<h2 id="求和与积分"><a href="#求和与积分" class="headerlink" title="求和与积分"></a>求和与积分</h2><p>求和使用\sum,可加上下标，积分使用\int可加上下限，双重积分用\iint</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span> <span class="keyword">\sum</span><span class="built_in">_</span>&#123;i=0&#125;<span class="built_in">^</span>n <span class="built_in">$</span></span><br><span class="line"><span class="built_in">$</span> <span class="keyword">\int</span><span class="built_in">_</span>1<span class="built_in">^</span><span class="keyword">\infty</span> <span class="built_in">$</span></span><br><span class="line"><span class="built_in">$</span> <span class="keyword">\iint</span><span class="built_in">_</span>1<span class="built_in">^</span><span class="keyword">\infty</span> <span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示为 $ \sum_{i&#x3D;0}^n $ 和 $ \int_1^\infty $ 以及 $ \iint_1^\infty $</p>
+<h2 id="极限"><a href="#极限" class="headerlink" title="极限"></a>极限</h2><p>极限使用\lim:</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span> <span class="keyword">\lim</span><span class="built_in">_</span>&#123;x <span class="keyword">\to</span> 0&#125; <span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示为：$ \lim_{x \to 0} $</p>
+<h2 id="表格与矩阵"><a href="#表格与矩阵" class="headerlink" title="表格与矩阵"></a>表格与矩阵</h2><p>表格样式lcr表示居中，|加入一条竖线，\hline表示行间横线，列之间用&amp;分隔，行之间用\分隔：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span><span class="keyword">\begin</span>&#123;array&#125;&#123;c|lcr&#125;</span><br><span class="line">n <span class="built_in">&amp;</span> <span class="keyword">\text</span>&#123;Left&#125; <span class="built_in">&amp;</span> <span class="keyword">\text</span>&#123;Center&#125; <span class="built_in">&amp;</span> <span class="keyword">\text</span>&#123;Right&#125; <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\hline</span></span><br><span class="line">1 <span class="built_in">&amp;</span> 1.97 <span class="built_in">&amp;</span> 5 <span class="built_in">&amp;</span> 12 <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">2 <span class="built_in">&amp;</span> -11 <span class="built_in">&amp;</span> 19 <span class="built_in">&amp;</span> -80 <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">3 <span class="built_in">&amp;</span> 70 <span class="built_in">&amp;</span> 209 <span class="built_in">&amp;</span> 1+i <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\end</span>&#123;array&#125;<span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$\begin{array}{c|lcr}<br>n &amp; \text{Left} &amp; \text{Center} &amp; \text{Right} \\<br>\hline<br>1 &amp; 1.97 &amp; 5 &amp; 12 \\<br>2 &amp; -11 &amp; 19 &amp; -80 \\<br>3 &amp; 70 &amp; 209 &amp; 1+i \\<br>\end{array}$$</p>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span><span class="keyword">\left</span>[</span><br><span class="line"><span class="keyword">\begin</span>&#123;matrix&#125;</span><br><span class="line">V<span class="built_in">_</span>A <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">V<span class="built_in">_</span>B <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">V<span class="built_in">_</span>C <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\end</span>&#123;matrix&#125;</span><br><span class="line"><span class="keyword">\right</span>] =</span><br><span class="line"><span class="keyword">\left</span>[</span><br><span class="line"><span class="keyword">\begin</span>&#123;matrix&#125;</span><br><span class="line">1 <span class="built_in">&amp;</span> 0 <span class="built_in">&amp;</span> L <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">-cosψ <span class="built_in">&amp;</span> sinψ <span class="built_in">&amp;</span> L <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">-cosψ <span class="built_in">&amp;</span> -sinψ <span class="built_in">&amp;</span> L</span><br><span class="line"><span class="keyword">\end</span>&#123;matrix&#125;</span><br><span class="line"><span class="keyword">\right</span>]</span><br><span class="line"><span class="keyword">\left</span>[</span><br><span class="line"><span class="keyword">\begin</span>&#123;matrix&#125;</span><br><span class="line">V<span class="built_in">_</span>x <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">V<span class="built_in">_</span>y <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line">W <span class="keyword">\\</span><span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\end</span>&#123;matrix&#125;</span><br><span class="line"><span class="keyword">\right</span>] <span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$\left[<br>\begin{matrix}<br>V_A \\<br>V_B \\<br>V_C \\<br>\end{matrix}<br>\right] &#x3D;<br>\left[<br>\begin{matrix}<br>1 &amp; 0 &amp; L \\<br>-cosψ &amp; sinψ &amp; L \\<br>-cosψ &amp; -sinψ &amp; L<br>\end{matrix}<br>\right]<br>\left[<br>\begin{matrix}<br>V_x \\<br>V_y \\<br>W \\<br>\end{matrix}<br>\right] $$</p>
+<hr>
+<p>综合测试：</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span><span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span> u&#125;&#123;<span class="keyword">\partial</span> t&#125;</span><br><span class="line">= h<span class="built_in">^</span>2 <span class="keyword">\left</span>( <span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="built_in">^</span>2 u&#125;&#123;<span class="keyword">\partial</span> x<span class="built_in">^</span>2&#125; +</span><br><span class="line"><span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="built_in">^</span>2 u&#125;&#123;<span class="keyword">\partial</span> y<span class="built_in">^</span>2&#125; +</span><br><span class="line"><span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="built_in">^</span>2 u&#125;&#123;<span class="keyword">\partial</span> z<span class="built_in">^</span>2&#125;<span class="keyword">\right</span>)<span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span> <span class="keyword">\lbrace</span> <span class="keyword">\sum</span><span class="built_in">_</span>&#123;i=0&#125;<span class="built_in">^</span>n i<span class="built_in">^</span>3 = <span class="keyword">\frac</span>&#123;(n<span class="built_in">^</span>2+n)(n+6)&#125;&#123;9&#125;  <span class="keyword">\rbrace</span><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果：</p>
+<p>$$\frac{\partial u}{\partial t}<br>&#x3D; h^2 \left( \frac{\partial^2 u}{\partial x^2} +<br>\frac{\partial^2 u}{\partial y^2} +<br>\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Alnair</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2024/05/28/Test/">http://example.com/2024/05/28/Test/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/11/17/hello-world/">Hello World</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Alnair | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
