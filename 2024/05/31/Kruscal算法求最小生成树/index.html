@@ -24,7 +24,7 @@
 <meta property="og:description" content="Kruscal 算法求最小生成树 本文来源于离散数学上机的题目：Kruskal算法在神经网络中的应用  标题：Kruskal算法在神经网络中的应用 类别：循环、选择语句 时间限制：1 内存限制：256 问题描述：根据ALL标准将大脑分为90个区，得到90个节点的全连接图，为了有效去除冗余特征，加快分类速度加强泛化能力，可以用最小生成树算法简化图得到简化的特征向量，所设计程序能够通过编译，并能够求出">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-31T09:02:47.000Z">
-<meta property="article:modified_time" content="2024-05-31T09:03:11.314Z">
+<meta property="article:modified_time" content="2024-05-31T09:58:22.157Z">
 <meta property="article:author" content="Alnair">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -39,6 +39,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -234,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          823 字
+          803 字
         
       </span>
     
@@ -329,10 +331,70 @@
 <p>程序实现的核心是如何判断图中的两节点是否联通（判断图中是否存在环），可以用<strong>并查集</strong>来实现。</p>
 <h2 id="并查集">并查集</h2>
 <p>Kruskal算法会在输出的MST中先加入点，因此我们将每个节点的parent赋为自身。随后对输入的每一条边进行判断：如果该边连接的两个节点的父节点不同，则向MST中加入这条边，并更新并查集，此处可以进行路径压缩（Path Compression）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp&#123;.line-numbers&#125;">for (int i = 0; i &lt; n; i++) &#123;<br>    int parentU = unionFind(unionSet, edges[i].u);<br>    int parentV = unionFind(unionSet, edges[i].v);<br>    if (parentU != parentV) &#123;<br>        MST.push_back(edges[i]);<br>        unionSet[parentV] = parentU;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> parentU <span class="token operator">=</span> <span class="token function">unionFind</span><span class="token punctuation">(</span>unionSet<span class="token punctuation">,</span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> parentV <span class="token operator">=</span> <span class="token function">unionFind</span><span class="token punctuation">(</span>unionSet<span class="token punctuation">,</span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>parentU <span class="token operator">!=</span> parentV<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        MST<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        unionSet<span class="token punctuation">[</span>parentV<span class="token punctuation">]</span> <span class="token operator">=</span> parentU<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 <h2 id="完整代码">完整代码</h2>
 <p>完善剩余的部分很简单，完整代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs cpp&#123;.line-numbers&#125;">// Kruskal&#x27;s algorithm<br><br>#include &lt;iostream&gt;<br>#include &lt;algorithm&gt;<br>#include &lt;vector&gt;<br>using namespace std;<br><br>struct Edge &#123;<br>    int u, v, weight;<br>&#125;;<br><br>bool cmp(Edge a, Edge b) &#123;<br>    return a.weight &lt; b.weight;<br>&#125;<br><br>int unionFind(int* unionSet, int x) &#123;<br>    if (unionSet[x] != x)<br>        return unionFind(unionSet, unionSet[x]);<br><br>    return unionSet[x];<br>&#125;<br><br>int main() &#123;<br>    int m, n;<br><br>    cin &gt;&gt; m &gt;&gt; n;<br>    Edge edges[n];<br>    vector&lt;Edge&gt; MST;<br>    int unionSet[m+1];<br><br>    for (int i = 0; i &lt; n; i++) &#123;<br>        cin &gt;&gt; edges[i].u &gt;&gt; edges[i].v &gt;&gt; edges[i].weight;<br>    &#125;<br>    <br>    for (int i = 0; i &lt; m+1; i++) &#123;<br>        unionSet[i] = i;<br>    &#125;<br><br>    sort(edges, edges + n, cmp);<br><br>    for (int i = 0; i &lt; n; i++) &#123;<br>        int parentU = unionFind(unionSet, edges[i].u);<br>        int parentV = unionFind(unionSet, edges[i].v);<br>        if (parentU != parentV) &#123;<br>            MST.push_back(edges[i]);<br>            unionSet[parentV] = parentU;<br>        &#125;<br>    &#125;<br><br>    for (int i = 0; i &lt; MST.size(); i++)<br>        cout &lt;&lt; MST[i].u &lt;&lt; &#x27; &#x27; &lt;&lt; MST[i].v &lt;&lt; &#x27; &#x27; &lt;&lt; MST[i].weight &lt;&lt; endl;<br><br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Kruskal's algorithm</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Edge</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> u<span class="token punctuation">,</span> v<span class="token punctuation">,</span> weight<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">bool</span> <span class="token function">cmp</span><span class="token punctuation">(</span>Edge a<span class="token punctuation">,</span> Edge b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> a<span class="token punctuation">.</span>weight <span class="token operator">&lt;</span> b<span class="token punctuation">.</span>weight<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">unionFind</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> unionSet<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>unionSet<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">!=</span> x<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token function">unionFind</span><span class="token punctuation">(</span>unionSet<span class="token punctuation">,</span> unionSet<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> unionSet<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> m<span class="token punctuation">,</span> n<span class="token punctuation">;</span>
+
+    cin <span class="token operator">>></span> m <span class="token operator">>></span> n<span class="token punctuation">;</span>
+    Edge edges<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span>Edge<span class="token operator">></span> MST<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> unionSet<span class="token punctuation">[</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cin <span class="token operator">>></span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>u <span class="token operator">>></span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v <span class="token operator">>></span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>weight<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        unionSet<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">sort</span><span class="token punctuation">(</span>edges<span class="token punctuation">,</span> edges <span class="token operator">+</span> n<span class="token punctuation">,</span> cmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> parentU <span class="token operator">=</span> <span class="token function">unionFind</span><span class="token punctuation">(</span>unionSet<span class="token punctuation">,</span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> parentV <span class="token operator">=</span> <span class="token function">unionFind</span><span class="token punctuation">(</span>unionSet<span class="token punctuation">,</span> edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>parentU <span class="token operator">!=</span> parentV<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            MST<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>edges<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            unionSet<span class="token punctuation">[</span>parentV<span class="token punctuation">]</span> <span class="token operator">=</span> parentU<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> MST<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        cout <span class="token operator">&lt;&lt;</span> MST<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>u <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span> <span class="token operator">&lt;&lt;</span> MST<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>v <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span> <span class="token operator">&lt;&lt;</span> MST<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>weight <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 <h2 id="后续完善">后续完善</h2>
 <p>你可以手写一个并查集类</p>
 
@@ -604,6 +666,8 @@
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
