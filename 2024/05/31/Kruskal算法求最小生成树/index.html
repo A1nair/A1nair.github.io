@@ -16,21 +16,21 @@
   <meta name="author" content="Alnair">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Kruscal 算法求最小生成树 本文来源于离散数学上机的题目：Kruskal算法在神经网络中的应用  标题：Kruskal算法在神经网络中的应用 类别：循环、选择语句 时间限制：1 内存限制：256 问题描述：根据ALL标准将大脑分为90个区，得到90个节点的全连接图，为了有效去除冗余特征，加快分类速度加强泛化能力，可以用最小生成树算法简化图得到简化的特征向量，所设计程序能够通过编译，并能够求出">
+    <meta name="description" content="Kruskal 算法求最小生成树 本文来源于离散数学上机的题目：Kruskal算法在神经网络中的应用  标题：Kruskal算法在神经网络中的应用 类别：循环、选择语句 时间限制：1 内存限制：256 问题描述：根据ALL标准将大脑分为90个区，得到90个节点的全连接图，为了有效去除冗余特征，加快分类速度加强泛化能力，可以用最小生成树算法简化图得到简化的特征向量，所设计程序能够通过编译，并能够求出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kruscal算法求最小生成树">
-<meta property="og:url" content="http://example.com/2024/05/31/Kruscal%E7%AE%97%E6%B3%95%E6%B1%82%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/index.html">
+<meta property="og:title" content="Kruskal算法求最小生成树">
+<meta property="og:url" content="http://example.com/2024/05/31/Kruskal%E7%AE%97%E6%B3%95%E6%B1%82%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/index.html">
 <meta property="og:site_name" content="Alnair">
-<meta property="og:description" content="Kruscal 算法求最小生成树 本文来源于离散数学上机的题目：Kruskal算法在神经网络中的应用  标题：Kruskal算法在神经网络中的应用 类别：循环、选择语句 时间限制：1 内存限制：256 问题描述：根据ALL标准将大脑分为90个区，得到90个节点的全连接图，为了有效去除冗余特征，加快分类速度加强泛化能力，可以用最小生成树算法简化图得到简化的特征向量，所设计程序能够通过编译，并能够求出">
+<meta property="og:description" content="Kruskal 算法求最小生成树 本文来源于离散数学上机的题目：Kruskal算法在神经网络中的应用  标题：Kruskal算法在神经网络中的应用 类别：循环、选择语句 时间限制：1 内存限制：256 问题描述：根据ALL标准将大脑分为90个区，得到90个节点的全连接图，为了有效去除冗余特征，加快分类速度加强泛化能力，可以用最小生成树算法简化图得到简化的特征向量，所设计程序能够通过编译，并能够求出">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-31T09:02:47.000Z">
-<meta property="article:modified_time" content="2024-05-31T09:58:22.157Z">
+<meta property="article:modified_time" content="2024-06-07T05:14:24.708Z">
 <meta property="article:author" content="Alnair">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Kruscal算法求最小生成树 - Alnair</title>
+  <title>Kruskal算法求最小生成树 - Alnair</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Kruscal算法求最小生成树"></span>
+            <span id="subtitle" data-typed-text="Kruskal算法求最小生成树"></span>
           
         </div>
 
@@ -284,12 +284,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Kruscal算法求最小生成树</h1>
+            <h1 id="seo-header">Kruskal算法求最小生成树</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>Kruscal 算法求最小生成树</h1>
+                <h1>Kruskal 算法求最小生成树</h1>
 <p>本文来源于离散数学上机的题目：Kruskal算法在神经网络中的应用</p>
 <blockquote>
 <p>标题：Kruskal算法在神经网络中的应用<br>
@@ -313,7 +313,7 @@
 输入方式：控制台<br>
 判定规则：忽略首尾空白、忽略空行、忽略大小写、数据之间只保留一个空白。</p>
 </blockquote>
-<h2 id="Kruscal-算法">Kruscal 算法</h2>
+<h2 id="Kruskal-算法">Kruskal 算法</h2>
 <ol>
 <li>
 <p>新建图<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle scriptlevel="0" displaystyle="true"><mi>G</mi></mstyle></mrow><annotation encoding="application/x-tex">{\displaystyle G}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathnormal">G</span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle scriptlevel="0" displaystyle="true"><mi>G</mi></mstyle></mrow><annotation encoding="application/x-tex">{\displaystyle G}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord"><span class="mord mathnormal">G</span></span></span></span></span>中拥有原图中相同的节点，但没有边</p>
@@ -414,8 +414,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Kruscal算法求最小生成树</div>
-      <div>http://example.com/2024/05/31/Kruscal算法求最小生成树/</div>
+      <div>Kruskal算法求最小生成树</div>
+      <div>http://example.com/2024/05/31/Kruskal算法求最小生成树/</div>
     </div>
     <div class="license-meta">
       
